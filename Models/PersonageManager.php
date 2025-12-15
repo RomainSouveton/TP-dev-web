@@ -83,4 +83,23 @@ class PersonnageManager
 
         return $persos;
     }
+
+
+    public function delete(Personnage $perso)
+    {
+        //supprime par id
+        $this->_db->exec('DELETE FROM personnages WHERE id = '.$perso->getId());
+    }
+
+    public function update(Personnage $perso)
+    {
+        // mise a jour des degats
+        $q = $this->_db->prepare('UPDATE personnages SET degats = :degats WHERE id = :id');
+        
+        // assignation des valeurs 
+        $q->bindValue(':degats', $perso->getDegats(), PDO::PARAM_INT);
+        $q->bindValue(':id', $perso->getId(), PDO::PARAM_INT);
+        
+        $q->execute();
+    }
 }

@@ -1,24 +1,19 @@
 <?php
-echo "<h2>Diagnostic du dossier Vendor</h2>";
 
-$vendorPath = __DIR__ . '/Vendor';
-echo "Contenu de <b>$vendorPath</b> :<br>";
+// charge l'autoloader 
+require_once 'Helpers/Psr4AutoloaderClass.php'; 
 
-if (is_dir($vendorPath)) {
-    $files = scandir($vendorPath);
-    foreach($files as $f) {
-        if($f != '.' && $f != '..') echo " - $f<br>";
-    }
-} else {
-    echo "<span style='color:red'>Le dossier Vendor n'existe pas !</span>";
-}
+// l'initialise
+$loader = new \Helpers\Psr4AutoloaderClass();
+$loader->register();
 
-$target = __DIR__ . '/Vendor/Plates/src/Engine.php';
-echo "<hr>Recherche du fichier Engine : <b>$target</b><br>";
+// namespaces avec me __dir__ ppour les problemes de chemin
+$loader->addNamespace('Controllers', __DIR__ . '/Controllers');
+$loader->addNamespace('Models', __DIR__ . '/Models');
+$loader->addNamespace('Helpers', __DIR__ . '/Helpers');
+$loader->addNamespace('League\Plates', __DIR__ . '/Vendor/Plates/src');
+$loader->addNamespace('Config', __DIR__ . '/Config');
 
-if (file_exists($target)) {
-    echo "<span style='color:green'>TROUVÉ ! Le chemin est bon.</span>";
-} else {
-    echo "<span style='color:red'>INTROUVABLE. Vérifie les noms des dossiers listés au-dessus.</span>";
-}
-?>
+// contrôleur principal
+$controller = new \Controllers\MainController();
+$controller->index();

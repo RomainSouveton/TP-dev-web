@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use League\Plates\Engine;
+use Models\PersonnageDAO;
 
 class MainController {
     
@@ -12,6 +13,19 @@ class MainController {
     }
 
     public function index() : void {
-        echo $this->templates->render('home', ['gameName' => 'Genshin Impact']);
+        $dao = new PersonnageDAO();
+        
+        // recup toute la liste 
+        $liste = $dao->getAll();
+
+        
+        $persoVedette = $dao->getByID('65f1a2b3c4d5e');
+
+        // On envoie tout à la vue
+        echo $this->templates->render('home', [
+            'title' => 'Mihoyo Collection',
+            'listPersonnage' => $liste,
+            'persoVedette' => $persoVedette
+        ]);
     }
 }

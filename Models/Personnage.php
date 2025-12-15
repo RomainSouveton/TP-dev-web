@@ -3,32 +3,25 @@ namespace Models;
 
 class Personnage
 {
-    // Attributs privés pour l'encapsulation (la base de la POO)
-    private int $_id;
-    private string $_nom;
-    private int $_degats;
+    
+    private string $_name;
+    private string $_element;
+    private string $_unitclass;
+    private ?string $_origin; 
+    private int $_rarity;
+    private string $_urlImg;
 
-    // Constantes de classe : on évite de balader des chiffres 1, 2 ou 3 partout sans savoir ce qu'ils veulent dire.
-    const CEST_MOI = 1; 
-    const PERSONNAGE_TUE = 2; 
-    const PERSONNAGE_FRAPPE = 3; 
-
-    // Stats du jeu (faciles à modifier ici pour équilibrer le jeu plus tard)
-    const PV_MAX = 100;
-    const DEGATS_MIN = 5;
-    const DEGATS_MAX = 15;
 
     public function __construct(array $donnees)
     {
         $this->hydrate($donnees);
     }
 
-    // Hydratation : permet de remplir l'objet automatiquement à partir d'un tableau (souvent issu de la BDD)
     public function hydrate(array $donnees)
     {
         foreach ($donnees as $key => $value) {
-            // On fabrique le nom du setter, ex: 'id' devient 'setId'
-            $method = 'set' . ucfirst($key);
+            // Gestion des udersocre dans les noms d'image
+            $method = 'set' . str_replace('_', '', ucwords($key, '_'));
             
             if (method_exists($this, $method)) {
                 $this->$method($value);
@@ -36,57 +29,68 @@ class Personnage
         }
     }
 
-    // Logique de combat : Mon personnage frappe une cible ($perso)
-    public function frapper(Personnage $perso) : int
-    {
-        // Règle de base : interdit de se frapper soi-même (sauf si on s'appelle Tyler Durden)
-        if ($perso->getId() == $this->_id) {
-            return self::CEST_MOI;
-        }
 
-        // On délègue la gestion des dégâts à la cible elle-même
-        return $perso->recevoirDegats();
-    }
 
-    // Logique de réception des dégâts
-    public function recevoirDegats() : int
-    {
-        // On tire un nombre aléatoire pour les dégâts
-        $this->_degats += rand(self::DEGATS_MIN, self::DEGATS_MAX);
+    public function getId(): string { return $this->_id; }
+    public function getName(): string { return $this->_name; }
+    public function getElement(): string { return $this->_element; }
+    public function getUnitclass(): string { return $this->_unitclass; }
+    public function getOrigin(): ?string { return $this->_origin; }
+    public function getRarity(): int { return $this->_rarity; }
+    public function getUrlImg(): string { return $this->_urlImg; }
 
-        // Si on dépasse le seuil fatal
-        if ($this->_degats >= self::PV_MAX) {
-            return self::PERSONNAGE_TUE;
-        }
 
-        return self::PERSONNAGE_FRAPPE;
-    }
-
-    public function getId(): int { return $this->_id; }
-    public function getNom(): string { return $this->_nom; }
-    public function getDegats(): int { return $this->_degats; }
-
-    
     public function setId($id)
     {
-        $id = (int) $id;
-        if ($id > 0) {
+        if (is_string($id)) {
             $this->_id = $id;
         }
     }
 
-    public function setNom($nom)
+    public function setName($name)
     {
-        if (is_string($nom)) {
-            $this->_nom = $nom;
+        if (is_string($name)) {
+            $this->_name = $name;
         }
     }
 
-    public function setDegats($degats)
+    public function setElement($element)
     {
-        $degats = (int) $degats;
-        if ($degats >= 0 && $degats <= self::PV_MAX) {
-            $this->_degats = $degats;
+        if (is_string($element)) {
+            $this->_element = $element;
+        }
+    }
+
+    public function setUnitclass($unitclass)
+    {
+        if (is_string($unitclass)) {
+            $this->_unitclass = $unitclass;
+        }
+    }
+
+    public function setOrigin($origin)
+    {
+        // L'origine peut être nulle ou un string
+        if (is_string($origin) || $origin === null) {
+            $this->_origin = $origin;
+        }
+    }
+
+    public function setRarity($rarity)
+    {
+        // conversion en entier
+        $rarity = (int) $rarity;
+        
+        // on vérifie que la rareté 
+        if ($rarity > 0 && $rarity <= 5) {
+            $this->_rarity = $rarity;
+        }
+    }
+
+    public function setUrlImg($urlImg)
+    {
+        if (is_string($urlImg)) {
+            $this->_urlImg = $urlImg;
         }
     }
 }
