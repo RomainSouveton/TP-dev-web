@@ -34,4 +34,53 @@ class PersonnageManager
     {
         return $this->_db->query('SELECT COUNT(*) FROM personnages')->fetchColumn();
     }
+
+    public function exists($info)
+    {
+        // si le paramètre est un entier on verifie par l'id
+        if (is_int($info)) {
+            return (bool) $this->_db->query('SELECT COUNT(*) FROM personnages WHERE id = '.$info)->fetchColumn();
+        }
+        
+        // sinon on verifie par le nom
+        $q = $this->_db->prepare('SELECT COUNT(*) FROM personnages WHERE nom = :nom');
+        $q->execute([':nom' => $info]);
+        
+        return (bool) $q->fetchColumn();
+    }
+
+    public function get($info)
+    {
+        // si le paramètre est un entier on rérecup par l'id
+        if (is_int($info)) {
+            $q = $this->_db->query('SELECT id, nom, degats FROM personnages WHERE id = '.$info);
+            $donnees = $q->fetch(PDO::FETCH_ASSOC);
+            
+            return new Personnage($donnees);
+        }
+        
+        // sinon on recup par le nom
+        $q = $this->_db->prepare('SELECT id, nom, degats FROM personnages WHERE nom = :nom');
+        $q->execute([':nom' => $info]);
+        $donnees = $q->fetch(PDO::FETCH_ASSOC);
+
+        return new Personnage($donnees);
+    }
+
+    public function getList($nom)
+    {
+        // tableau de retour
+        $persos = [];
+        
+        // requête exclue le joueur actuel
+        $q = $this->_db->prepare('SELECT id, nom, degats FROM personnages WHERE nom <> :nom ORDER BY nom');
+        $q->execute([':nom' => $nom]);
+
+        // on boucle sur les résultats pour créer les objets
+        while ($donnees = $q->fetch(PDO::FETCH_ASSOC)) {
+            $persos[] = new Personnage($donnees);
+        }
+
+        return $persos;
+    }
 }
