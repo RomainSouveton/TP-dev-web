@@ -14,18 +14,32 @@ class MainController {
 
     public function index() : void {
         $dao = new PersonnageDAO();
-        
-        // recup toute la liste 
         $liste = $dao->getAll();
-
         
-        $persoVedette = $dao->getByID('65f1a2b3c4d5e');
+        // On récupère un perso vedette pour le test (si l'ID existe)
+        $persoVedette = $dao->getByID('65f1a2b3c4d5e'); 
 
-        // On envoie tout à la vue
         echo $this->templates->render('home', [
             'title' => 'Mihoyo Collection',
             'listPersonnage' => $liste,
             'persoVedette' => $persoVedette
         ]);
+    }
+
+    public function displayAddPerso() : void {
+        echo $this->templates->render('add-perso', ['title' => 'Ajouter un personnage']);
+    }
+
+    
+    public function displayAddElement() : void {
+        echo $this->templates->render('add-element', ['title' => 'Ajouter un élément']);
+    }
+
+    public function displayLogs() : void {
+        echo $this->templates->render('logs', ['title' => 'Logs système']);
+    }
+
+    public function displayLogin() : void {
+        echo $this->templates->render('login', ['title' => 'Connexion']);
     }
 }

@@ -20,6 +20,7 @@
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
         <?php foreach ($listPersonnage as $perso): ?>
             <div style="border: 1px solid #ddd; padding: 15px; border-radius: 12px; width: 220px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: white;">
+                
                 <div style="text-align: center; margin-bottom: 10px;">
                     <img src="<?= $this->e($perso->getUrlImg()) ?>" alt="<?= $this->e($perso->getName()) ?>" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                 </div>
@@ -32,11 +33,19 @@
                 </p>
 
                 <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-between;">
-                    <a href="#" style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 4px; font-size: 0.8em;">Modifier</a>
-                    <a href="#" style="text-decoration: none; color: white; background-color: #dc3545; padding: 5px 10px; border-radius: 4px; font-size: 0.8em;">Supprimer</a>
+                    <a href="index.php?action=edit-perso&id=<?= $perso->getId() ?>" 
+                       style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 4px; font-size: 0.8em;">
+                       Modifier
+                    </a>
+                    
+                    <a href="index.php?action=del-perso&id=<?= $perso->getId() ?>" 
+                       style="text-decoration: none; color: white; background-color: #dc3545; padding: 5px 10px; border-radius: 4px; font-size: 0.8em;"
+                       onclick="return confirm('Êtes-vous sûr ?');"> 
+                       Supprimer
+                    </a>
                 </div>
 
             </div>
         <?php endforeach; ?>
-    </div>
+        </div>
 </div>
