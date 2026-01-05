@@ -12,7 +12,11 @@
 <header>
     <!-- Menu -->
     <nav>
-
+        <a href="index.php">Accueil</a>
+        <a href="index.php?action=add-perso">Ajouter Perso</a>
+        <a href="index.php?action=add-perso-element">Ajouter Élément</a>
+        <a href="index.php?action=logs">Logs</a>
+        <a href="index.php?action=login">Connexion</a>
     </nav>
 </header>
 <!-- #contenu -->
