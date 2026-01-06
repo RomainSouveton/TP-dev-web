@@ -37,4 +37,34 @@ class PersonnageDAO extends BasePDODAO
         }
         return null;
     }
+
+    public function add($perso) 
+    {
+        $sql = "INSERT INTO personnage (id, name, element, unitclass, rarity, origin, url_img) 
+                VALUES (:id, :name, :element, :unitclass, :rarity, :origin, :url_img)";
+        
+        $stmt = $this->pdo->prepare($sql);
+        
+        $stmt->bindValue(':id', $perso->getId());
+        $stmt->bindValue(':name', $perso->getName());
+        $stmt->bindValue(':element', $perso->getElement());
+        $stmt->bindValue(':unitclass', $perso->getUnitclass());
+        $stmt->bindValue(':rarity', $perso->getRarity());
+        $stmt->bindValue(':origin', $perso->getOrigin());
+        $stmt->bindValue(':url_img', $perso->getUrlImg());
+        
+        return $stmt->execute();
+    }
+
+    // Supprime un personnage par son ID
+    public function delete(string $id) : bool
+    {
+        $sql = "DELETE FROM personnage WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        
+        // Renvoie true si au moins 1 ligne a été supprimée
+        return $stmt->rowCount() > 0;
+    }
 }

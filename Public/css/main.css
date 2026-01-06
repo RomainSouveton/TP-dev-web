@@ -143,3 +143,111 @@ footer {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
+
+.message-box {
+    background-color: #2d3748; 
+    color: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #667eea; 
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.char-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /
+}
+
+.char-card {
+    background: white;
+    border: 1px solid #eef2f7;
+    border-radius: 15px;
+    width: 220px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.char-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.char-img-wrapper {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.char-img-wrapper img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #f0f0f0;
+}
+
+.char-card h3 {
+    text-align: center;
+    margin: 5px 0 10px 0;
+    color: #4a5568;
+}
+
+.char-details {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.stars {
+    color: #f6ad55; 
+}
+
+.char-actions {
+    margin-top: auto; 
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8em;
+    border-radius: 8px;
+}
+
+.featured-box {
+    background-color: #e6fffa;
+    border: 1px solid #b2f5ea;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.featured-box h2 {
+    margin-top: 0;
+    color: #2c7a7b;
+    font-size: 1.2em;
+}
+
+.featured-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.featured-content img {
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%;
+}

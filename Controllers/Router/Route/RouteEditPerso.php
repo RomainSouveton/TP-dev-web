@@ -15,7 +15,13 @@ class RouteEditPerso extends Route
 
     public function get($params = [])
     {
-        return $this->controller->displayAddPerso();
+        try {
+            // On récupère l'ID obligatoire
+            $id = $this->getParam($params, 'id', false);
+            return $this->controller->displayEditPerso($id);
+        } catch (\Exception $e) {
+            return $this->controller->index("Erreur : ID manquant pour la modification.");
+        }
     }
 
     public function post($params = []) {}
