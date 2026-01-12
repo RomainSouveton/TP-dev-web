@@ -6,6 +6,9 @@ use Controllers\MainController;
 
 class RouteAddElement extends Route
 {
+    /**
+     * Contrôleur 
+     */
     private $controller;
 
     public function __construct(MainController $controller)
@@ -13,10 +16,16 @@ class RouteAddElement extends Route
         $this->controller = $controller;
     }
 
+    /**
+     * Affiche le formulaire 
+     */
     public function get($params = [])
     {
         return $this->controller->displayAddElement();
     }
 
+    /**
+     * Traite le formulaire 
+     */
     public function post($params = []) {}
 }

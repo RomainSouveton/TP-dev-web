@@ -4,11 +4,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Start Edge + Fichier Courrant",
+            "label": "Start Brave + Fichier Courrant",
             "type": "shell",
             "command": "start",
             "args": [
-                "msedge",
+                "brave",
                 "http://grp-130.iq.iut21.u-bourgogne.fr/vscode/${relativeFileDirname}/${fileBasename}"
             ],
             "group": {

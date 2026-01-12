@@ -3,94 +3,61 @@ namespace Models;
 
 class Personnage
 {
-    
-    private string $_name;
-    private string $_element;
-    private string $_unitclass;
-    private ?string $_origin; 
-    private int $_rarity;
-    private string $_urlImg;
+    /**
+     * ID du personnage
+     */
+    private string $_id = "";
+    /**
+     * Nom du personnage
+     */
+    private string $_name = "";
+    /**
+     * Element du personnage
+     */
+    private ?Element $_element = null;
+    /**
+     * Classe du personnage
+     */
+    private ?UnitClass $_unitclass = null;
+    /**
+     * Origine du personnage
+     */
+    private ?Origin $_origin = null;
+    /**
+     * Rarete du personnage
+     */
+    private int $_rarity = 4;
+    /**
+     * URL de l'image du personnage
+     */
+    private string $_urlImg = ""; 
 
-
-    public function __construct(array $donnees)
+    public function __construct(array $data = [])
     {
-        $this->hydrate($donnees);
-    }
-
-    public function hydrate(array $donnees)
-    {
-        foreach ($donnees as $key => $value) {
-            // Gestion des udersocre dans les noms d'image
-            $method = 'set' . str_replace('_', '', ucwords($key, '_'));
-            
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
+        if (!empty($data)) {
+            // On remplit si la clé existe dans le tableau
+            if (isset($data['id']))        $this->setId($data['id']);
+            if (isset($data['name']))      $this->setName($data['name']);
+            if (isset($data['rarity']))    $this->setRarity($data['rarity']);
+            if (isset($data['url_img']))   $this->setUrlImg($data['url_img']);
         }
     }
 
-
-
+    // getter
     public function getId(): string { return $this->_id; }
     public function getName(): string { return $this->_name; }
-    public function getElement(): string { return $this->_element; }
-    public function getUnitclass(): string { return $this->_unitclass; }
-    public function getOrigin(): ?string { return $this->_origin; }
+    public function getElement(): ?Element { return $this->_element; }
+    public function getUnitclass(): ?UnitClass { return $this->_unitclass; }
+    public function getOrigin(): ?Origin { return $this->_origin; }
     public function getRarity(): int { return $this->_rarity; }
     public function getUrlImg(): string { return $this->_urlImg; }
 
-
-    public function setId($id)
-    {
-        if (is_string($id)) {
-            $this->_id = $id;
-        }
-    }
-
-    public function setName($name)
-    {
-        if (is_string($name)) {
-            $this->_name = $name;
-        }
-    }
-
-    public function setElement($element)
-    {
-        if (is_string($element)) {
-            $this->_element = $element;
-        }
-    }
-
-    public function setUnitclass($unitclass)
-    {
-        if (is_string($unitclass)) {
-            $this->_unitclass = $unitclass;
-        }
-    }
-
-    public function setOrigin($origin)
-    {
-        // L'origine peut être nulle ou un string
-        if (is_string($origin) || $origin === null) {
-            $this->_origin = $origin;
-        }
-    }
-
-    public function setRarity($rarity)
-    {
-        // conversion en entier
-        $rarity = (int) $rarity;
-        
-        // on vérifie que la rareté 
-        if ($rarity > 0 && $rarity <= 5) {
-            $this->_rarity = $rarity;
-        }
-    }
-
-    public function setUrlImg($urlImg)
-    {
-        if (is_string($urlImg)) {
-            $this->_urlImg = $urlImg;
-        }
-    }
+    // setter
+    public function setId(string $id): void { $this->_id = $id; }
+    public function setName(string $name): void { $this->_name = $name; }
+    public function setElement(?Element $element): void { $this->_element = $element; }
+    public function setUnitclass(?UnitClass $unitclass): void { $this->_unitclass = $unitclass; }
+    public function setOrigin(?Origin $origin): void { $this->_origin = $origin; }
+    public function setRarity($rarity): void { $this->_rarity = (int)$rarity; }
+    public function setUrlImg(string $url): void { $this->_urlImg = $url; }
 }

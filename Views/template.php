@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="public/css/main.css"/>
+    <link rel="stylesheet" href="./public/css/main.css?v=<?= time() ?>"/> <!-- time poour actualiser le css gardé en memoire-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $this->e($title) ?></title>
 </head>

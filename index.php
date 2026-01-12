@@ -8,6 +8,7 @@ $loader->register();
 // Enregistrement des dossiers
 $loader->addNamespace('Controllers', __DIR__ . '/Controllers');
 $loader->addNamespace('Models', __DIR__ . '/Models');
+$loader->addNamespace('Services', __DIR__ . '/Services');
 $loader->addNamespace('Helpers', __DIR__ . '/Helpers');
 $loader->addNamespace('League\Plates', __DIR__ . '/Vendor/Plates/src');
 $loader->addNamespace('Config', __DIR__ . '/Config');

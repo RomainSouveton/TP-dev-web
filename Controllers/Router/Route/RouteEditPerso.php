@@ -6,6 +6,9 @@ use Controllers\MainController;
 
 class RouteEditPerso extends Route
 {
+    /**
+     * Contrôleur 
+     */
     private $controller;
 
     public function __construct(MainController $controller)
@@ -13,10 +16,32 @@ class RouteEditPerso extends Route
         $this->controller = $controller;
     }
 
+    /**
+     * Affiche le formulaire 
+     */
     public function get($params = [])
     {
-        return $this->controller->displayAddPerso();
+        // Affiche le formulaire
+        $id = $this->getParam($params, 'id', false);
+        $this->controller->displayEditPerso($id);
     }
 
-    public function post($params = []) {}
+    /**
+     * Traite le formulaire 
+     */
+    public function post($params = [])
+    {
+        // Traite le formulaire
+        $data = [
+            "id"        => $this->getParam($params, "id", false), 
+            "name"      => $this->getParam($params, "name", false),
+            "element"   => $this->getParam($params, "element", false),
+            "unitclass" => $this->getParam($params, "unitclass", false),
+            "rarity"    => $this->getParam($params, "rarity", false),
+            "origin"    => $this->getParam($params, "origin", true), 
+            "url_img"   => $this->getParam($params, "url_img", false)
+        ];
+
+        $this->controller->updatePerso($data);
+    }
 }

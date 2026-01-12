@@ -7,13 +7,20 @@ use Controllers\Router\Route\RouteAddPerso;
 use Controllers\Router\Route\RouteAddElement;
 use Controllers\Router\Route\RouteLogs;
 use Controllers\Router\Route\RouteLogin;
-use Controllers\Router\Route\RouteEditPerso;
-use Controllers\Router\Route\RouteDelPerso;
 
 class Router
 {
+    /**
+     * Liste des routes 
+     */
     private $routeList = [];
+    /**
+     * Liste des contrôleurs 
+     */
     private $ctrlList = [];
+    /**
+     * Nom de la clé de l'action 
+     */
     private $action_key;
 
     public function __construct($name_of_action_key = "action")
@@ -23,6 +30,9 @@ class Router
         $this->createRouteList();
     }
 
+    /**
+     * Crée la liste des contrôleurs 
+     */
     private function createControllerList()
     {
         $this->ctrlList = [
@@ -30,6 +40,9 @@ class Router
         ];
     }
 
+    /**
+     * Crée la liste des routes 
+     */
     private function createRouteList()
     {
         // On lie URL et classes Route
@@ -44,6 +57,9 @@ class Router
         ];
     }
 
+    /**
+     * Routeur 
+     */
     public function routing($get, $post)
     {
         $action = isset($get[$this->action_key]) ? $get[$this->action_key] : "index";

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire Exercice 1</title>
+</head>
+<body>
+    <h2>Formulaire</h2>
+    <form action="script.php" method="POST">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required><br><br>
+
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required><br><br>
+
+        <input type="hidden" name="secret" value="valeur-cachee">
+
+        <label for="age">Catégorie d’âge :</label>
+        <select id="age" name="age">
+            <option value="enfant">Enfant</option>
+            <option value="ado">Ado</option>
+            <option value="adulte">Adulte</option>
+        </select><br><br>
+
+        <p>Situation :</p>
+        <input type="radio" id="etudiant" name="situation" value="etudiant" checked>
+        <label for="etudiant">Étudiant</label><br>
+        <input type="radio" id="actif" name="situation" value="vie active">
+        <label for="actif">Vie active</label><br><br>
+
+        <button type="submit">Envoyer</button>
+    </form>
+</body>
+</html>

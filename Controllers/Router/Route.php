@@ -5,6 +5,9 @@ use Exception;
 
 abstract class Route
 {
+    /**
+     * Action GET ou POST 
+     */
     public function action($params = [], $method = 'GET')
     {
         if ($method === 'POST') {
@@ -14,6 +17,9 @@ abstract class Route
         }
     }
 
+    /**
+     * Récupère un paramètre 
+     */
     protected function getParam(array $array, string $paramName, bool $canBeEmpty = true)
     {
         if (isset($array[$paramName])) {

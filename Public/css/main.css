@@ -1,84 +1,698 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+
+
+
+/* --- RESET & GLOBAL --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #333;
+:root {
+    /* Palette Genshin Impact */
+    --primary-gold: #d3bc8e;
+    --primary-gold-dark: #b89968;
+    --primary-gold-light: #ece5d8;
+
+    --bg-dark: #1e2328;
+    --bg-card: #2b3036;
+    --bg-card-light: #383e47;
+
+    --text-primary: #ece5d8;
+    --text-secondary: #d3bc8e;
+    --text-muted: #9ca3af;
+
+    --accent-blue: #4a9eff;
+    --accent-purple: #9d7cdb;
+    --accent-anemo: #74c2a8;
+
+    --shadow-gold: 0 4px 20px rgba(211, 188, 142, 0.3);
+    --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+    --border-radius: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1a1d23 0%, #252a31 50%, #1e2328 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-primary);
+    position: relative;
+}
+
+/* Effet de texture en arrière-plan */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(211, 188, 142, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#contenu {
+    position: relative;
+    z-index: 2;
+    padding: 40px 20px;
+    margin: 20px auto;
+    max-width: 1400px;
+}
+
+/* --- HEADER --- */
 header {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(180deg, rgba(43, 48, 54, 0.95) 0%, rgba(30, 35, 40, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--primary-gold);
+    box-shadow: var(--shadow-dark);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
+    margin-bottom: 40px;
 }
 
-nav ul {
-    list-style: none;
+/* Ornement doré en haut du header */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+    opacity: 0.8;
+}
+
+nav {
     display: flex;
     justify-content: center;
-    padding: 1rem;
-    gap: 2rem;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 nav a {
     text-decoration: none;
-    color: #667eea;
+    color: var(--text-secondary);
     font-weight: 600;
-    padding: 0.5rem 1.5rem;
-    border-radius: 25px;
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.8rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    background: rgba(43, 48, 54, 0.6);
+    border: 1px solid rgba(211, 188, 142, 0.3);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Noto Serif', serif;
+    letter-spacing: 0.5px;
+}
+
+/* Effet de brillance sur les liens */
+nav a::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(211, 188, 142, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+nav a:hover::before {
+    opacity: 1;
 }
 
 nav a:hover {
-    background: #667eea;
-    color: white;
+    background: linear-gradient(135deg, rgba(211, 188, 142, 0.2) 0%, rgba(211, 188, 142, 0.1) 100%);
+    border-color: var(--primary-gold);
+    color: var(--primary-gold-light);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(211, 188, 142, 0.4);
 }
 
-main#contenu {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    min-height: 60vh;
+/* --- CONTENEURS --- */
+.home-container,
+.form-container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
 }
 
 h1 {
-    color: #667eea;
-    font-size: 2.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary-gold-light) 0%, var(--primary-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    font-family: 'Noto Serif', serif;
+    letter-spacing: 2px;
+    position: relative;
+    text-shadow: 0 0 30px rgba(211, 188, 142, 0.5);
+}
+
+/* Ornement sous le H1 */
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+}
+
+h2 {
+    color: var(--primary-gold-light);
+    font-size: 2rem;
+    font-weight: 600;
     margin-bottom: 1.5rem;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Noto Serif', serif;
 }
 
+h3 {
+    color: var(--primary-gold);
+    font-family: 'Noto Serif', serif;
+}
+
+/* --- GRILLE PERSONNAGES --- */
+.char-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    width: 100%;
+    padding: 10px;
+}
+
+@media (max-width: 600px) {
+    .char-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.char-card {
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+    border: 2px solid rgba(211, 188, 142, 0.3);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+/* Bordure lumineuse au survol */
+.char-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+    border-radius: var(--border-radius);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s;
+}
+
+.char-card:hover::before {
+    opacity: 0.5;
+}
+
+.char-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-gold), var(--shadow-dark);
+    border-color: var(--primary-gold);
+}
+
+.char-img-wrapper {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Cercle doré autour de l'avatar */
+.char-img-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.char-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--bg-card-light);
+    display: block;
+    box-shadow: 0 4px 16px rgba(211, 188, 142, 0.4);
+}
+
+.char-card h3 {
+    margin: 10px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2d3748;
+    text-align: center;
+    word-break: break-word;
+    font-family: 'Noto Serif', serif;
+}
+
+.char-details {
+    font-size: 0.95rem;
+    color: #2d3748;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    line-height: 2;
+}
+
+/* Ensure element, class, and rarity text are dark on any background */
+.char-details strong,
+.char-details span {
+    color: #2d3748 !important;
+}
+
+/* Existing rule for rarity stars, keep but ensure dark */
+.char-details span[style*="color"] {
+    color: #2d3748 !important;
+    filter: drop-shadow(0 0 2px rgba(45, 55, 72, 0.5));
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.char-actions {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(211, 188, 142, 0.2);
+}
+
+/* --- BOUTONS --- */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    border-radius: var(--border-radius);
+    text-decoration: none !important;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    color: white !important;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Noto Serif', serif;
+    letter-spacing: 0.5px;
+}
+
+/* Effet de lueur au survol */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.char-actions .btn {
+    padding: 10px 16px;
+    flex: 1;
+    font-size: 0.85rem;
+}
+
+.form-container .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.05rem;
+    margin-top: 20px;
+}
+
+/* Couleurs des boutons style Genshin */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+    border-color: var(--primary-gold-light);
+    box-shadow: 0 4px 12px rgba(211, 188, 142, 0.4);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-gold-light) 0%, var(--primary-gold) 100%);
+    box-shadow: 0 6px 20px rgba(211, 188, 142, 0.6);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border-color: #e74c3c;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff6b6b 0%, #e74c3c 100%);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--accent-anemo) 0%, #5fa88e 100%);
+    border-color: var(--accent-anemo);
+    box-shadow: 0 4px 12px rgba(116, 194, 168, 0.4);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #8dd4b8 0%, var(--accent-anemo) 100%);
+    box-shadow: 0 6px 20px rgba(116, 194, 168, 0.6);
+    transform: translateY(-2px);
+}
+
+/* --- FORMULAIRE --- */
+.form-container {
+    max-width: 650px;
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark);
+    border: 2px solid rgba(211, 188, 142, 0.3);
+    position: relative;
+}
+
+/* Ornement en coin du formulaire */
+.form-container::before,
+.form-container::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary-gold);
+    opacity: 0.5;
+}
+
+.form-container::before {
+    top: 10px;
+    left: 10px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.form-container::after {
+    bottom: 10px;
+    right: 10px;
+    border-left: none;
+    border-top: none;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--primary-gold);
+    font-size: 0.95rem;
+    font-family: 'Noto Serif', serif;
+}
+
+.form-input,
+.form-input select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid rgba(211, 188, 142, 0.3);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: inherit;
+    background: rgba(43, 48, 54, 0.6);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.form-input:focus,
+select.form-input:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    background: rgba(43, 48, 54, 0.9);
+    box-shadow: 0 0 0 3px rgba(211, 188, 142, 0.2);
+}
+
+select.form-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d3bc8e' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+/* --- MESSAGES --- */
+.message-box {
+    background: linear-gradient(135deg, var(--primary-gold-dark) 0%, var(--primary-gold) 100%);
+    color: var(--bg-dark);
+    padding: 18px 24px;
+    border-radius: var(--border-radius);
+    margin-bottom: 24px;
+    text-align: center;
+    border: 2px solid var(--primary-gold-light);
+    box-shadow: var(--shadow-gold);
+    font-weight: 600;
+    font-family: 'Noto Serif', serif;
+}
+
+.bg-warning-soft {
+    background: linear-gradient(135deg, rgba(211, 188, 142, 0.2) 0%, rgba(211, 188, 142, 0.1) 100%);
+    border: 2px solid var(--primary-gold);
+    color: var(--text-primary);
+}
+
+/* --- LOGS PAGE --- */
+.logs-wrapper {
+    display: flex;
+    gap: 30px;
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow-dark);
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 2px solid rgba(211, 188, 142, 0.3);
+}
+
+.logs-sidebar {
+    width: 250px;
+    min-width: 250px;
+    border-right: 2px solid rgba(211, 188, 142, 0.2);
+    padding-right: 20px;
+}
+
+.logs-sidebar h3 {
+    color: var(--primary-gold);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-family: 'Noto Serif', serif;
+}
+
+.logs-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.logs-sidebar li {
+    margin-bottom: 8px;
+}
+
+.logs-sidebar a {
+    text-decoration: none;
+    color: var(--text-muted);
+    padding: 10px 14px;
+    display: block;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.logs-sidebar a:hover {
+    background: rgba(211, 188, 142, 0.1);
+    color: var(--primary-gold);
+    border-color: rgba(211, 188, 142, 0.3);
+}
+
+.logs-sidebar a.active {
+    background: linear-gradient(135deg, rgba(211, 188, 142, 0.2) 0%, rgba(211, 188, 142, 0.1) 100%);
+    color: var(--primary-gold-light);
+    font-weight: 600;
+    border-color: var(--primary-gold);
+    box-shadow: 0 2px 8px rgba(211, 188, 142, 0.3);
+}
+
+.logs-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.logs-content h3 {
+    color: var(--primary-gold-light);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-family: 'Noto Serif', serif;
+}
+
+.logs-content pre {
+    background: rgba(30, 35, 40, 0.6);
+    padding: 24px;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    border: 1px solid rgba(211, 188, 142, 0.2);
+    color: var(--text-primary);
+    font-family: 'Courier New', Consolas, monospace;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.logs-content p {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* --- FOOTER --- */
 footer {
-    background: rgba(255, 255, 255, 0.95);
     text-align: center;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    color: #666;
+    padding: 30px;
+    margin-top: 60px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(211, 188, 142, 0.2);
 }
 
+/* --- ANIMATIONS --- */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-main#contenu {
-    animation: fadeIn 0.5s ease;
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.char-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Rareté étoiles en sombre */
+.char-details span[style*="color"] {
+    color: #2d3748 !important;
+    filter: drop-shadow(0 0 2px rgba(45, 55, 72, 0.5));
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    nav {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    nav a {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .form-container {
+        padding: 25px;
+    }
+
+    .char-card {
+        padding: 15px;
+    }
+
+    .logs-wrapper {
+        flex-direction: column;
+    }
+
+    .logs-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid rgba(211, 188, 142, 0.2);
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+}
+
+/* Scrollbar personnalisée style Genshin */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-gold) 0%, var(--primary-gold-dark) 100%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-gold-light);
 }

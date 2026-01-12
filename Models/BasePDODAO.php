@@ -6,9 +6,14 @@ use Config\Config;
 
 abstract class BasePDODAO
 {
+    /**
+     * Base de données
+     */
     private $db;
 
-    // Récupère ou crée la connexion PDO
+    /**
+     * Récupère ou crée la connexion PDO
+     */
     protected function getDB() : PDO
     {
         if ($this->db === null) {
@@ -23,7 +28,9 @@ abstract class BasePDODAO
         return $this->db;
     }
 
-    // execute une requête SQL 
+    /**
+     * Execute une requête SQL
+     */
     protected function execRequest(string $sql, array $params = null)
     {
         $stmt = $this->getDB()->prepare($sql);
